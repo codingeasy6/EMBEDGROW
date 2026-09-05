@@ -6,7 +6,7 @@
  * CONFIGURATION VARIABLES
  * Set your real WhatsApp phone number (e.g. "15550192834" or "919876543210")
  */
-const WHATSAPP_NUMBER = "YOUR_NUMBER";
+const WHATSAPP_NUMBER = "918610752189";
 const DEFAULT_WHATSAPP_MESSAGE = encodeURIComponent("Hello EMBEDGROW! I would like to inquire about your website or project development services.");
 
 document.addEventListener("DOMContentLoaded", () => {

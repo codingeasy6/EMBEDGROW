@@ -165,7 +165,7 @@ function initPortfolioFilters() {
 }
 
 /* --------------------------------------------------------------------------
-   6. Professional Form Validation & Loading Toast Simulation
+   6. Professional Form Validation & Netlify Forms Submission
    -------------------------------------------------------------------------- */
 function initContactForm() {
   const contactForm = document.getElementById("contactForm");
@@ -173,7 +173,7 @@ function initContactForm() {
 
   if (!contactForm) return;
 
-  contactForm.addEventListener("submit", (e) => {
+  contactForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const name = document.getElementById("name")?.value.trim();
@@ -192,18 +192,53 @@ function initContactForm() {
       return;
     }
 
-    // UX Button Loading State
+    // Capture button original state and lock against duplicate submissions
+    const originalBtnHtml = submitBtn ? submitBtn.innerHTML : "";
     if (submitBtn) {
-      const originalText = submitBtn.innerHTML;
       submitBtn.disabled = true;
-      submitBtn.innerHTML = `Submitting Inquiry...`;
+      submitBtn.innerHTML = `<span>Sending Inquiry...</span>`;
+    }
 
-      setTimeout(() => {
-        showStatus("Thank you! Your inquiry has been sent successfully. Our team will reach out within 24 hours.", "success");
+    // Reset status box display
+    if (formStatus) {
+      formStatus.style.display = "none";
+      formStatus.className = "form-status-msg";
+    }
+
+    try {
+      const formData = new FormData(contactForm);
+
+      // Verify honeypot field is empty (silent rejection for automated bots)
+      if (formData.get("bot-field")) {
+        console.warn("Honeypot trap triggered.");
+        showStatus("Submission flagged. Please try again.", "error");
+        return;
+      }
+
+      // Submit URL-encoded form payload to Netlify
+      const response = await fetch("/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: new URLSearchParams(formData).toString()
+      });
+
+      if (response.ok) {
+        showStatus("Thank you! Your project inquiry has been received. Our team will review your requirements and reach out within 24 hours.", "success");
         contactForm.reset();
+      } else {
+        throw new Error(`Netlify returned HTTP status ${response.status}`);
+      }
+    } catch (error) {
+      console.error("Netlify Forms submission error:", error);
+      showStatus("Unable to submit your inquiry at this moment. Please check your connection or contact us directly via WhatsApp (+91 8610752189) or email (embedgrow@gmail.com).", "error");
+      // Note: contactForm.reset() is intentionally NOT called, preserving user data for retry
+    } finally {
+      if (submitBtn) {
         submitBtn.disabled = false;
-        submitBtn.innerHTML = originalText;
-      }, 1000);
+        submitBtn.innerHTML = originalBtnHtml;
+      }
     }
   });
 
@@ -211,6 +246,7 @@ function initContactForm() {
     if (!formStatus) return;
     formStatus.textContent = msg;
     formStatus.className = `form-status-msg ${type}`;
+    formStatus.style.display = "block";
   }
 
   function isValidEmail(email) {

@@ -1,0 +1,20 @@
+{
+  "name": "embedgrow",
+  "version": "1.0.0",
+  "description": "EMBEDGROW - Website Development & Academic Projects",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node dev-server.js",
+    "start": "node dev-server.js",
+    "serve": "node dev-server.js"
+  },
+  "keywords": [
+    "embedgrow",
+    "website-development",
+    "iot",
+    "engineering-projects"
+  ],
+  "author": "EMBEDGROW",
+  "license": "ISC"
+}

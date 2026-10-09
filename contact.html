@@ -146,6 +146,10 @@
               <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email address" required>
             </div>
             <div class="form-group">
+              <label for="mobile" class="form-label">Mobile Number *</label>
+              <input type="tel" id="mobile" name="mobile" class="form-input" placeholder="Enter your mobile number" pattern="^\+?[0-9\s\-()]{7,20}$" title="Please enter a valid mobile number (e.g. +91 9876543210)" required>
+            </div>
+            <div class="form-group">
               <label for="service" class="form-label">Service Required *</label>
               <select id="service" name="service" class="form-select" required>
                 <option value="" disabled selected>Select service category</option>

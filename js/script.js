@@ -173,83 +173,123 @@ function initContactForm() {
 
   if (!contactForm) return;
 
-  contactForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
+  let isSubmitting = false;
 
-    const name = document.getElementById("name")?.value.trim();
-    const email = document.getElementById("email")?.value.trim();
-    const service = document.getElementById("service")?.value;
-    const message = document.getElementById("message")?.value.trim();
-    const submitBtn = contactForm.querySelector("button[type='submit']");
+  contactForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    if (isSubmitting) return;
+
+    const name = document.getElementById("name")?.value.trim() || "";
+    const email = document.getElementById("email")?.value.trim() || "";
+    const service = document.getElementById("service")?.value || "";
+    const message = document.getElementById("message")?.value.trim() || "";
+
+    const submitBtn = contactForm.querySelector(
+      'button[type="submit"]'
+    );
+
+    function showStatus(text, type) {
+      if (!formStatus) return;
+
+      formStatus.textContent = text;
+      formStatus.className = `form-status-msg ${type}`;
+      formStatus.style.display = "block";
+    }
 
     if (!name || !email || !service || !message) {
-      showStatus("Please fill in all required fields marked with *.", "error");
+      showStatus(
+        "Please fill in all required fields marked with *.",
+        "error"
+      );
       return;
     }
 
-    if (!isValidEmail(email)) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       showStatus("Please enter a valid email address.", "error");
       return;
     }
 
-    // Capture button original state and lock against duplicate submissions
-    const originalBtnHtml = submitBtn ? submitBtn.innerHTML : "";
-    if (submitBtn) {
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = `<span>Sending Inquiry...</span>`;
+    const formData = new FormData(contactForm);
+
+    if (String(formData.get("bot-field") || "").trim() !== "") {
+      showStatus(
+        "Unable to process this submission. Please try again.",
+        "error"
+      );
+      return;
     }
 
-    // Reset status box display
+    // Ensure Netlify receives the expected form identifier.
+    formData.set("form-name", "project-inquiry");
+
+    const originalButtonHTML = submitBtn?.innerHTML || "";
+
+    isSubmitting = true;
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = "<span>Sending Inquiry...</span>";
+    }
+
     if (formStatus) {
       formStatus.style.display = "none";
       formStatus.className = "form-status-msg";
     }
 
     try {
-      const formData = new FormData(contactForm);
+      const encodedData = new URLSearchParams();
 
-      // Verify honeypot field is empty (silent rejection for automated bots)
-      if (formData.get("bot-field")) {
-        console.warn("Honeypot trap triggered.");
-        showStatus("Submission flagged. Please try again.", "error");
-        return;
+      for (const [key, value] of formData.entries()) {
+        if (typeof value === "string") {
+          encodedData.append(key, value);
+        }
       }
 
-      // Submit URL-encoded form payload to Netlify
-      const response = await fetch("/", {
+      const endpoint = new URL(
+        contactForm.getAttribute("action") || "/contact",
+        window.location.origin
+      );
+
+      if (endpoint.origin !== window.location.origin) {
+        throw new Error("Unexpected form submission destination.");
+      }
+
+      const response = await fetch(endpoint.pathname + endpoint.search, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: new URLSearchParams(formData).toString()
+        body: encodedData.toString(),
+        credentials: "same-origin"
       });
 
-      if (response.ok) {
-        showStatus("Thank you! Your project inquiry has been received. Our team will review your requirements and reach out within 24 hours.", "success");
-        contactForm.reset();
-      } else {
-        throw new Error(`Netlify returned HTTP status ${response.status}`);
+      if (!response.ok) {
+        throw new Error(
+          `Form submission failed with HTTP ${response.status}.`
+        );
       }
+
+      showStatus(
+        "Thank you! Your project inquiry has been submitted successfully. Our team will review your requirements and reach out within 24 hours.",
+        "success"
+      );
+
+      contactForm.reset();
     } catch (error) {
       console.error("Netlify Forms submission error:", error);
-      showStatus("Unable to submit your inquiry at this moment. Please check your connection or contact us directly via WhatsApp (+91 8610752189) or email (embedgrow@gmail.com).", "error");
-      // Note: contactForm.reset() is intentionally NOT called, preserving user data for retry
+
+      showStatus(
+        "Unable to submit your inquiry at this moment. Your details have been preserved. Please try again or contact us via WhatsApp (+91 8610752189) or email (embedgrow@gmail.com).",
+        "error"
+      );
     } finally {
+      isSubmitting = false;
+
       if (submitBtn) {
         submitBtn.disabled = false;
-        submitBtn.innerHTML = originalBtnHtml;
+        submitBtn.innerHTML = originalButtonHTML;
       }
     }
   });
-
-  function showStatus(msg, type) {
-    if (!formStatus) return;
-    formStatus.textContent = msg;
-    formStatus.className = `form-status-msg ${type}`;
-    formStatus.style.display = "block";
-  }
-
-  function isValidEmail(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  }
 }

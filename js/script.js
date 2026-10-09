@@ -182,6 +182,7 @@ function initContactForm() {
 
     const name = document.getElementById("name")?.value.trim() || "";
     const email = document.getElementById("email")?.value.trim() || "";
+    const mobile = document.getElementById("mobile")?.value.trim() || "";
     const service = document.getElementById("service")?.value || "";
     const message = document.getElementById("message")?.value.trim() || "";
 
@@ -197,7 +198,7 @@ function initContactForm() {
       formStatus.style.display = "block";
     }
 
-    if (!name || !email || !service || !message) {
+    if (!name || !email || !mobile || !service || !message) {
       showStatus(
         "Please fill in all required fields marked with *.",
         "error"
@@ -207,6 +208,11 @@ function initContactForm() {
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       showStatus("Please enter a valid email address.", "error");
+      return;
+    }
+
+    if (!/^\+?[0-9\s\-()]{7,20}$/.test(mobile)) {
+      showStatus("Please enter a valid mobile number.", "error");
       return;
     }
 

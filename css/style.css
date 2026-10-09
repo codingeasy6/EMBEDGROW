@@ -362,6 +362,15 @@ button {
   text-decoration: none;
 }
 
+.logo-link picture,
+.hero-logo-banner-wrapper picture,
+.footer-brand picture {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+}
+
 .navbar-logo-img {
   height: 48px;
   width: auto;

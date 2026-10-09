@@ -80,6 +80,7 @@ const server = http.createServer((req, res) => {
       console.log('  Form Name: ', params.get('form-name') || '(not specified)');
       console.log('  Full Name: ', params.get('name') || '(empty)');
       console.log('  Email:     ', params.get('email') || '(empty)');
+      console.log('  Mobile:    ', params.get('mobile') || '(empty)');
       console.log('  Service:   ', params.get('service') || '(empty)');
       console.log('  Message:   ', params.get('message') || '(empty)');
       console.log('  Honeypot:  ', params.get('bot-field') || '(empty / passed)');

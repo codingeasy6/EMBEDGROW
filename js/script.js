@@ -165,7 +165,7 @@ function initPortfolioFilters() {
 }
 
 /* --------------------------------------------------------------------------
-   6. Professional Form Validation & Netlify Forms Submission
+   6. Contact Form Validation & Submission Handler
    -------------------------------------------------------------------------- */
 function initContactForm() {
   const contactForm = document.getElementById("contactForm");
@@ -185,10 +185,9 @@ function initContactForm() {
     const mobile = document.getElementById("mobile")?.value.trim() || "";
     const service = document.getElementById("service")?.value || "";
     const message = document.getElementById("message")?.value.trim() || "";
+    const botField = contactForm.querySelector('input[name="bot-field"]')?.value.trim() || "";
 
-    const submitBtn = contactForm.querySelector(
-      'button[type="submit"]'
-    );
+    const submitBtn = contactForm.querySelector('button[type="submit"]');
 
     function showStatus(text, type) {
       if (!formStatus) return;
@@ -198,11 +197,9 @@ function initContactForm() {
       formStatus.style.display = "block";
     }
 
+    // Client-side validation
     if (!name || !email || !mobile || !service || !message) {
-      showStatus(
-        "Please fill in all required fields marked with *.",
-        "error"
-      );
+      showStatus("Please fill in all required fields marked with *.", "error");
       return;
     }
 
@@ -212,25 +209,17 @@ function initContactForm() {
     }
 
     if (!/^\+?[0-9\s\-()]{7,20}$/.test(mobile)) {
-      showStatus("Please enter a valid mobile number.", "error");
+      showStatus("Please enter a valid mobile number (e.g. +91 9876543210).", "error");
       return;
     }
 
-    const formData = new FormData(contactForm);
-
-    if (String(formData.get("bot-field") || "").trim() !== "") {
-      showStatus(
-        "Unable to process this submission. Please try again.",
-        "error"
-      );
+    // Honeypot check
+    if (botField !== "") {
+      showStatus("Unable to process this submission. Please try again.", "error");
       return;
     }
-
-    // Ensure Netlify receives the expected form identifier.
-    formData.set("form-name", "project-inquiry");
 
     const originalButtonHTML = submitBtn?.innerHTML || "";
-
     isSubmitting = true;
 
     if (submitBtn) {
@@ -244,18 +233,8 @@ function initContactForm() {
     }
 
     try {
-      const encodedData = new URLSearchParams();
-
-      for (const [key, value] of formData.entries()) {
-        if (typeof value === "string") {
-          encodedData.append(key, value);
-        }
-      }
-
-      const endpoint = new URL(
-        contactForm.getAttribute("action") || "/contact",
-        window.location.origin
-      );
+      const targetAction = contactForm.getAttribute("action") || "/api/contact";
+      const endpoint = new URL(targetAction, window.location.origin);
 
       if (endpoint.origin !== window.location.origin) {
         throw new Error("Unexpected form submission destination.");
@@ -264,31 +243,43 @@ function initContactForm() {
       const response = await fetch(endpoint.pathname + endpoint.search, {
         method: "POST",
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
+          "Content-Type": "application/json",
+          "Accept": "application/json"
         },
-        body: encodedData.toString(),
-        credentials: "same-origin"
+        body: JSON.stringify({
+          name,
+          email,
+          mobile,
+          service,
+          message,
+          "bot-field": botField
+        })
       });
 
-      if (!response.ok) {
-        throw new Error(
-          `Form submission failed with HTTP ${response.status}.`
-        );
+      const result = await response.json().catch(() => null);
+
+      if (!response.ok || !result || !result.success) {
+        const errorMsg = result?.error || `Submission failed with status HTTP ${response.status}.`;
+        throw new Error(errorMsg);
       }
 
       showStatus(
-        "Thank you! Your project inquiry has been submitted successfully. Our team will review your requirements and reach out within 24 hours.",
+        result.message || "Thank you! Your project inquiry has been submitted successfully. Our team will review your requirements and reach out within 24 hours.",
         "success"
       );
 
+      // Reset form ONLY on confirmed success
       contactForm.reset();
     } catch (error) {
-      console.error("Netlify Forms submission error:", error);
+      console.error("Form submission error:", error);
 
-      showStatus(
-        "Unable to submit your inquiry at this moment. Your details have been preserved. Please try again or contact us via WhatsApp (+91 8610752189) or email (embedgrow@gmail.com).",
-        "error"
-      );
+      const isNetworkError = error?.name === "TypeError" || /failed to fetch|network/i.test(error?.message || "");
+      const userMessage = isNetworkError || !error?.message
+        ? "Unable to submit your inquiry at this moment due to a network connection issue. Your details have been preserved. Please try again or contact us via WhatsApp (+91 8610752189) or email (embedgrow@gmail.com)."
+        : error.message;
+
+      showStatus(userMessage, "error");
+      // Note: Entered form details are preserved because reset() is not called here
     } finally {
       isSubmitting = false;
 

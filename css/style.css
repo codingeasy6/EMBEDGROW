@@ -1368,9 +1368,22 @@ button {
   color: var(--navy);
 }
 
-.contact-info-text p, .contact-info-text a {
+.contact-info-text p {
   font-size: 0.95rem;
   color: var(--text-muted);
+}
+
+.contact-info-text a {
+  font-size: 0.95rem;
+  color: var(--teal);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color var(--transition-fast);
+  cursor: pointer;
+}
+
+.contact-info-text a:hover {
+  color: var(--orange);
 }
 
 .contact-form-card {

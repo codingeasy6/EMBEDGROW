@@ -21,7 +21,7 @@
   <!-- Sticky Navbar -->
   <header class="header">
     <div class="container navbar">
-      <a href="index.html" class="logo-link" aria-label="EMBEDGROW Home">
+      <a href="/" class="logo-link" aria-label="EMBEDGROW Home">
         <picture>
           <source srcset="assets/navbar-logo.webp" type="image/webp">
           <img src="assets/navbar-logo.png" alt="EMBEDGROW Emblem" class="navbar-logo-img" width="340" height="182">
@@ -34,16 +34,16 @@
 
       <nav aria-label="Main Navigation">
         <ul class="nav-menu">
-          <li><a href="index.html" class="nav-link">Home</a></li>
-          <li><a href="services.html" class="nav-link">Services</a></li>
-          <li><a href="projects.html" class="nav-link">Projects</a></li>
-          <li><a href="about.html" class="nav-link">About</a></li>
-          <li><a href="contact.html" class="nav-link active">Contact</a></li>
+          <li><a href="/" class="nav-link">Home</a></li>
+          <li><a href="/services" class="nav-link">Services</a></li>
+          <li><a href="/projects" class="nav-link">Projects</a></li>
+          <li><a href="/about" class="nav-link">About</a></li>
+          <li><a href="/contact" class="nav-link active">Contact</a></li>
         </ul>
       </nav>
 
       <div class="nav-cta">
-        <a href="contact.html" class="btn btn-primary">
+        <a href="/contact" class="btn btn-primary">
           <span>Get Started</span>
           <span class="btn-arrow">&rarr;</span>
         </a>
@@ -85,7 +85,7 @@
             </div>
             <div class="contact-info-text">
               <h3>Email Us</h3>
-              <p><a href="mailto:embedgrow@gmail.com">embedgrow@gmail.com</a></p>
+              <p><!--email_off--><a href="mailto:embedgrow@gmail.com" class="email-link">embedgrow@gmail.com</a><!--/email_off--></p>
             </div>
           </div>
 
@@ -128,10 +128,7 @@
         <!-- Contact Form Card -->
         <div class="contact-form-card">
           <h2 style="font-size: 1.6rem; font-weight: 900; color: var(--navy); margin-bottom: 24px;">Send a Project Inquiry</h2>
-          <form id="contactForm" name="project-inquiry" method="POST" action="/contact" netlify data-netlify="true" data-netlify-honeypot="bot-field" novalidate>
-            <!-- Hidden Netlify Forms Form Name Identifier -->
-            <input type="hidden" name="form-name" value="project-inquiry">
-            
+          <form id="contactForm" name="project-inquiry" method="POST" action="/api/contact" novalidate>
             <!-- Honeypot Spam Filter (Hidden from human users) -->
             <div style="display: none;" aria-hidden="true">
               <label>Don’t fill this out if you're human: <input name="bot-field" tabindex="-1" autocomplete="off"></label>
@@ -212,7 +209,7 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <a href="index.html" class="logo-link">
+          <a href="/" class="logo-link">
             <picture>
               <source srcset="assets/logo.webp" type="image/webp">
               <img src="assets/logo.png" alt="EMBEDGROW Logo" class="footer-logo-img" width="1024" height="1024" loading="lazy" decoding="async">
@@ -226,19 +223,19 @@
         <div>
           <h3 class="footer-heading">Quick Links</h3>
           <ul class="footer-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="projects.html">Projects</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/services">Services</a></li>
+            <li><a href="/projects">Projects</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
           </ul>
         </div>
 
         <div>
           <h3 class="footer-heading">Core Services</h3>
           <ul class="footer-links">
-            <li><a href="services.html#web-development">Website Development</a></li>
-            <li><a href="services.html#project-development">School & College Projects</a></li>
+            <li><a href="/services#web-development">Website Development</a></li>
+            <li><a href="/services#project-development">School & College Projects</a></li>
           </ul>
         </div>
 

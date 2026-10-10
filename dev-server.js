@@ -66,28 +66,70 @@ function resolveFilePath(urlPath) {
 }
 
 const server = http.createServer((req, res) => {
-  // Handle local simulation of Netlify Forms POST
+  // Handle /api/contact (Cloudflare Pages Function simulation) or legacy POST
   if (req.method === 'POST') {
     let body = '';
     req.on('data', chunk => {
       body += chunk.toString();
     });
     req.on('end', () => {
-      const params = new URLSearchParams(body);
+      let data = {};
+      const contentType = req.headers['content-type'] || '';
+
+      if (contentType.includes('application/json')) {
+        try {
+          data = JSON.parse(body);
+        } catch {
+          data = {};
+        }
+      } else {
+        const params = new URLSearchParams(body);
+        for (const [key, value] of params.entries()) {
+          data[key] = value;
+        }
+      }
+
+      const botField = (data['bot-field'] || data['_gotcha'] || '').trim();
+      const name = (data.name || '').trim();
+      const email = (data.email || '').trim();
+      const mobile = (data.mobile || '').trim();
+      const service = (data.service || '').trim();
+      const message = (data.message || '').trim();
+
       console.log('\n--------------------------------------------------');
-      console.log('  📬 [Dev Server] Form Submission Received');
+      console.log('  📬 [Dev Server] Contact Submission Received');
       console.log('--------------------------------------------------');
-      console.log('  Form Name: ', params.get('form-name') || '(not specified)');
-      console.log('  Full Name: ', params.get('name') || '(empty)');
-      console.log('  Email:     ', params.get('email') || '(empty)');
-      console.log('  Mobile:    ', params.get('mobile') || '(empty)');
-      console.log('  Service:   ', params.get('service') || '(empty)');
-      console.log('  Message:   ', params.get('message') || '(empty)');
-      console.log('  Honeypot:  ', params.get('bot-field') || '(empty / passed)');
+      console.log('  Name:     ', name || '(empty)');
+      console.log('  Email:    ', email || '(empty)');
+      console.log('  Mobile:   ', mobile || '(empty)');
+      console.log('  Service:  ', service || '(empty)');
+      console.log('  Message:  ', message || '(empty)');
+      console.log('  Honeypot: ', botField ? `BLOCKED (${botField})` : 'PASSED (clean)');
       console.log('--------------------------------------------------\n');
 
-      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-      res.end('OK');
+      res.setHeader('Content-Type', 'application/json; charset=utf-8');
+
+      if (botField !== '') {
+        // Silently accept honeypot bot trap
+        res.writeHead(200);
+        res.end(JSON.stringify({ success: true, message: 'Inquiry received.' }));
+        return;
+      }
+
+      if (!name || !email || !mobile || !service || !message) {
+        res.writeHead(400);
+        res.end(JSON.stringify({
+          success: false,
+          error: 'Please fill in all required fields marked with *.'
+        }));
+        return;
+      }
+
+      res.writeHead(200);
+      res.end(JSON.stringify({
+        success: true,
+        message: 'Thank you! Your project inquiry has been submitted successfully. Our team will review your requirements and reach out within 24 hours.'
+      }));
     });
     return;
   }

@@ -71,6 +71,17 @@ function initNavbar() {
         document.body.style.overflow = "";
       });
     });
+
+    // Close menu on Escape key (a11y)
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && navMenu.classList.contains("active")) {
+        hamburger.classList.remove("active");
+        navMenu.classList.remove("active");
+        hamburger.setAttribute("aria-expanded", "false");
+        document.body.style.overflow = "";
+        hamburger.focus();
+      }
+    });
   }
 }
 
@@ -79,6 +90,12 @@ function initNavbar() {
    -------------------------------------------------------------------------- */
 function initScrollReveal() {
   const revealElements = document.querySelectorAll(".reveal-on-scroll");
+
+  // Immediate visibility for users preferring reduced motion (a11y)
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    revealElements.forEach(el => el.classList.add("is-visible"));
+    return;
+  }
 
   if ("IntersectionObserver" in window) {
     const revealObserver = new IntersectionObserver((entries, observer) => {
@@ -138,8 +155,12 @@ function initPortfolioFilters() {
 
   filterBtns.forEach(btn => {
     btn.addEventListener("click", () => {
-      filterBtns.forEach(b => b.classList.remove("active"));
+      filterBtns.forEach(b => {
+        b.classList.remove("active");
+        b.setAttribute("aria-pressed", "false");
+      });
       btn.classList.add("active");
+      btn.setAttribute("aria-pressed", "true");
 
       const filterValue = btn.getAttribute("data-filter");
 

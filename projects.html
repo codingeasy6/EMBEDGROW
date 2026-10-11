@@ -8,12 +8,48 @@
   
   <link rel="icon" type="image/png" href="assets/navbar-logo.png">
   <link rel="canonical" href="https://embedgrow.com/projects">
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="EMBEDGROW">
+  <meta property="og:url" content="https://embedgrow.com/projects">
+  <meta property="og:title" content="Projects Portfolio | EMBEDGROW - Web & IoT Solutions">
+  <meta property="og:description" content="Explore EMBEDGROW's portfolio of websites and student engineering projects in IoT, embedded systems, Arduino, ESP32, and software.">
+  <meta property="og:image" content="https://embedgrow.com/assets/logo.png">
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@EMBEDGROW">
+  <meta name="twitter:title" content="Projects Portfolio | EMBEDGROW - Web & IoT Solutions">
+  <meta name="twitter:description" content="Explore EMBEDGROW's portfolio of websites and student engineering projects in IoT, embedded systems, Arduino, ESP32, and software.">
+  <meta name="twitter:image" content="https://embedgrow.com/assets/logo.png">
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Projects Portfolio | EMBEDGROW",
+    "url": "https://embedgrow.com/projects",
+    "description": "Portfolio of responsive websites and student engineering projects across IoT, embedded systems, Arduino, ESP32, and software.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "EMBEDGROW",
+      "url": "https://embedgrow.com/",
+      "logo": "https://embedgrow.com/assets/logo.png"
+    }
+  }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
+  <!-- Skip to Main Content (Accessibility) -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <!-- Top Scroll Progress Indicator -->
   <div id="scroll-progress"></div>
@@ -57,13 +93,15 @@
     </div>
   </header>
 
+  <main id="main-content">
+
   <!-- Page Banner -->
   <section class="section-padding" style="background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%); color: var(--white); text-align: center;">
     <div class="container">
       <span class="section-label" style="background: rgba(255,255,255,0.1); color: var(--orange); border-color: rgba(255,85,0,0.3);">OUR PORTFOLIO</span>
       <h1 class="section-title" style="color: var(--white); font-size: 3.25rem;">Explore Our Work</h1>
       <p class="section-description" style="color: #CBD5E1; max-width: 720px; margin: 0 auto;">
-        Filter through our recent work across website development, school science projects, college mini & final year projects, and IoT solutions.
+        Browse our recent work across website development, school science projects, college projects, and IoT solutions.
       </p>
     </div>
   </section>
@@ -74,7 +112,7 @@
       <!-- Section Header -->
       <div class="section-header reveal-on-scroll">
         <span class="section-label">PORTFOLIO</span>
-        <h2 class="section-title">Verified Web & Technical Project Solutions</h2>
+        <h2 class="section-title">Web & Technical Project Solutions</h2>
         <p class="section-description">
           Browse our portfolio of responsive websites and practical engineering projects across IoT, embedded systems, and software.
         </p>
@@ -82,12 +120,12 @@
 
       <!-- Filter Tabs -->
       <div class="filter-tabs reveal-on-scroll">
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="websites">Websites</button>
-        <button class="filter-btn" data-filter="school">School Projects</button>
-        <button class="filter-btn" data-filter="college">College Projects</button>
-        <button class="filter-btn" data-filter="iot">IoT</button>
-        <button class="filter-btn" data-filter="embedded">Embedded</button>
+        <button class="filter-btn active" data-filter="all" aria-pressed="true">All</button>
+        <button class="filter-btn" data-filter="websites" aria-pressed="false">Websites</button>
+        <button class="filter-btn" data-filter="school" aria-pressed="false">School Projects</button>
+        <button class="filter-btn" data-filter="college" aria-pressed="false">College Projects</button>
+        <button class="filter-btn" data-filter="iot" aria-pressed="false">IoT</button>
+        <button class="filter-btn" data-filter="embedded" aria-pressed="false">Embedded</button>
       </div>
 
       <!-- Portfolio Grid -->
@@ -95,128 +133,140 @@
         <article class="portfolio-card reveal-on-scroll" data-category="websites">
           <div class="portfolio-img-wrapper">
             <div class="portfolio-placeholder-graphic">
-              <svg width="42" height="42" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+              <svg width="42" height="42" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
               <span style="font-size:0.9rem; font-weight:800; margin-top:10px;">Business & Startup Web Platform</span>
             </div>
             <span class="portfolio-category-badge">Websites</span>
           </div>
           <div class="portfolio-body">
             <h3 class="portfolio-title">Corporate Tech Business Site</h3>
-            <p class="portfolio-desc">Modern corporate website platform built for brand positioning and lead generation. Features clear service sections, responsive layouts, and fast page speeds.</p>
+            <p class="portfolio-desc">A modern business website with clean service sections, responsive design, and fast page loading.</p>
             <div class="portfolio-tech-tags">
               <span>HTML5</span>
               <span>CSS3</span>
               <span>JavaScript</span>
             </div>
-            <a href="/contact" class="portfolio-link">Inquire Similar Project &rarr;</a>
+            <a href="/contact" class="portfolio-link" aria-label="Inquire about a project similar to Corporate Tech Business Site">
+              <span>Inquire Similar Project</span> &rarr;
+            </a>
           </div>
         </article>
 
         <article class="portfolio-card reveal-on-scroll" data-category="college iot embedded">
           <div class="portfolio-img-wrapper">
             <div class="portfolio-placeholder-graphic">
-              <svg width="42" height="42" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg>
+              <svg width="42" height="42" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg>
               <span style="font-size:0.9rem; font-weight:800; margin-top:10px;">Smart Weather IoT Hub</span>
             </div>
             <span class="portfolio-category-badge">College Project</span>
           </div>
           <div class="portfolio-body">
             <h3 class="portfolio-title">IoT Environmental Sensing System</h3>
-            <p class="portfolio-desc">A final-year IoT project that streams real-time sensor data to a cloud dashboard using an ESP32 microcontroller with live analytics.</p>
+            <p class="portfolio-desc">A final-year IoT project that streams live sensor data to a cloud dashboard using an ESP32 microcontroller.</p>
             <div class="portfolio-tech-tags">
               <span>ESP32</span>
               <span>C++</span>
               <span>Firebase</span>
               <span>IoT</span>
             </div>
-            <a href="/contact" class="portfolio-link">Inquire Similar Project &rarr;</a>
+            <a href="/contact" class="portfolio-link" aria-label="Inquire about a project similar to IoT Environmental Sensing System">
+              <span>Inquire Similar Project</span> &rarr;
+            </a>
           </div>
         </article>
 
         <article class="portfolio-card reveal-on-scroll" data-category="school embedded">
           <div class="portfolio-img-wrapper">
             <div class="portfolio-placeholder-graphic">
-              <svg width="42" height="42" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+              <svg width="42" height="42" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
               <span style="font-size:0.9rem; font-weight:800; margin-top:10px;">Smart Home Science Project</span>
             </div>
             <span class="portfolio-category-badge">School Project</span>
           </div>
           <div class="portfolio-body">
             <h3 class="portfolio-title">Automated Security & Lighting</h3>
-            <p class="portfolio-desc">A practical demonstration project featuring automatic motion detection, lighting control, and audible alarms using Arduino microcontrollers.</p>
+            <p class="portfolio-desc">A school science project with motion detection, automated lighting, and buzzer alerts using Arduino.</p>
             <div class="portfolio-tech-tags">
               <span>Arduino</span>
               <span>C</span>
               <span>Sensors</span>
             </div>
-            <a href="/contact" class="portfolio-link">Inquire Similar Project &rarr;</a>
+            <a href="/contact" class="portfolio-link" aria-label="Inquire about a project similar to Automated Security and Lighting">
+              <span>Inquire Similar Project</span> &rarr;
+            </a>
           </div>
         </article>
 
         <article class="portfolio-card reveal-on-scroll" data-category="websites college">
           <div class="portfolio-img-wrapper">
             <div class="portfolio-placeholder-graphic">
-              <svg width="42" height="42" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+              <svg width="42" height="42" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
               <span style="font-size:0.9rem; font-weight:800; margin-top:10px;">Educational Portal App</span>
             </div>
             <span class="portfolio-category-badge">Web Development</span>
           </div>
           <div class="portfolio-body">
             <h3 class="portfolio-title">Online Academy & Student Portal</h3>
-            <p class="portfolio-desc">A responsive student portal designed to manage coursework, announcements, class schedules, and assignment submissions efficiently.</p>
+            <p class="portfolio-desc">A responsive student portal for viewing coursework, class schedules, announcements, and assignments.</p>
             <div class="portfolio-tech-tags">
               <span>React</span>
               <span>HTML/CSS</span>
               <span>JavaScript</span>
             </div>
-            <a href="/contact" class="portfolio-link">Inquire Similar Project &rarr;</a>
+            <a href="/contact" class="portfolio-link" aria-label="Inquire about a project similar to Online Academy & Student Portal">
+              <span>Inquire Similar Project</span> &rarr;
+            </a>
           </div>
         </article>
 
         <article class="portfolio-card reveal-on-scroll" data-category="college embedded">
           <div class="portfolio-img-wrapper">
             <div class="portfolio-placeholder-graphic">
-              <svg width="42" height="42" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 3"></path></svg>
+              <svg width="42" height="42" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 3"></path></svg>
               <span style="font-size:0.9rem; font-weight:800; margin-top:10px;">Obstacle Avoiding Rover</span>
             </div>
             <span class="portfolio-category-badge">College Mini Project</span>
           </div>
           <div class="portfolio-body">
             <h3 class="portfolio-title">Autonomous Robotics Vehicle</h3>
-            <p class="portfolio-desc">An autonomous wheeled robot that detects obstacles with ultrasonic sensors and steers smoothly using dedicated motor drivers.</p>
+            <p class="portfolio-desc">An autonomous robot rover that avoids obstacles using ultrasonic sensors and motor drivers.</p>
             <div class="portfolio-tech-tags">
               <span>Arduino</span>
               <span>C++</span>
               <span>Robotics</span>
             </div>
-            <a href="/contact" class="portfolio-link">Inquire Similar Project &rarr;</a>
+            <a href="/contact" class="portfolio-link" aria-label="Inquire about a project similar to Autonomous Robotics Vehicle">
+              <span>Inquire Similar Project</span> &rarr;
+            </a>
           </div>
         </article>
 
         <article class="portfolio-card reveal-on-scroll" data-category="websites">
           <div class="portfolio-img-wrapper">
             <div class="portfolio-placeholder-graphic">
-              <svg width="42" height="42" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+              <svg width="42" height="42" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
               <span style="font-size:0.9rem; font-weight:800; margin-top:10px;">Digital Storefront</span>
             </div>
-            <span class="portfolio-category-badge">Web Websites</span>
+            <span class="portfolio-category-badge">Websites</span>
           </div>
           <div class="portfolio-body">
             <h3 class="portfolio-title">Product Landing & E-Commerce</h3>
-            <p class="portfolio-desc">A fast-loading storefront landing page with clear product cards, category filtering, and an intuitive customer inquiry flow.</p>
+            <p class="portfolio-desc">A clean e-commerce landing page with product cards, category filters, and an inquiry flow.</p>
             <div class="portfolio-tech-tags">
               <span>HTML5</span>
               <span>CSS3</span>
               <span>JavaScript</span>
             </div>
-            <a href="/contact" class="portfolio-link">Inquire Similar Project &rarr;</a>
+            <a href="/contact" class="portfolio-link" aria-label="Inquire about a project similar to Product Landing & E-Commerce">
+              <span>Inquire Similar Project</span> &rarr;
+            </a>
           </div>
         </article>
       </div>
 
       <!-- Project Delivery Standards -->
       <div class="section-header reveal-on-scroll" style="margin-top: 64px;">
-        <span class="section-label">DELIVERY GUARANTEE</span>
+        <span class="section-label">PROJECT STANDARDS</span>
         <h2 class="section-title">What Every Project Includes</h2>
         <p class="section-description">
           Whether we build a business website or an academic engineering project, we deliver complete, well-documented solutions.
@@ -227,7 +277,7 @@
         <div class="why-card">
           <div class="why-num">01</div>
           <h3 class="why-title">COMPLETE SOURCE CODE</h3>
-          <p class="why-desc">Clean, fully commented code with zero hidden dependencies or obfuscation.</p>
+          <p class="why-desc">Clean, well-commented code with clear project documentation.</p>
         </div>
         <div class="why-card">
           <div class="why-num">02</div>
@@ -259,6 +309,7 @@
       </a>
     </div>
   </section>
+  </main>
 
   <!-- Footer -->
   <footer class="footer">
